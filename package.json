@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev": "concurrently 'npm run client:dev' 'npm run server:dev'",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "start": "npm run server:start",
     "client:dev": "vite",
     "client:preview": "vite preview",
     "server:dev": "tsx watch src/server/main.tsx",
-    "server:start": "node dist/server/server/main.js",
-    "all:build": "tsc -b && vite build",
-    "all:lint": "eslint ."
+    "server:start": "node dist/server/server/main.js"
   },
   "dependencies": {
     "react": "^19.2.5",
@@ -21,6 +23,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
