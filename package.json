@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently 'npm run client:dev' 'npm run server:dev'",
+    "test": "vitest",
     "build": "npm run db:generate && npm run server:build && npm run client:build",
     "lint": "eslint .",
     "start": "npm run server:start",
@@ -13,7 +14,7 @@
     "client:build": "tsc -b && vite build",
     "server:dev": "tsx watch src/server/main.tsx",
     "server:start": "node dist/server/server/main.js",
-    "server:build": "tsc -p tsconfig.server.json",
+    "server:build": "tsc --noEmit false --outDir dist/server",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev"
@@ -52,6 +53,7 @@
     "tsx": "^4.21.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.9"
+    "vite": "^8.0.9",
+    "vitest": "^4.1.4"
   }
 }
