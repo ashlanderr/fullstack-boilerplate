@@ -7,4 +7,13 @@ export default defineConfig({
     outDir: 'dist/client',
   },
   plugins: [react()],
+  server: {
+    proxy: {
+      "/trpc": {
+        target: "http://localhost:5000",
+        changeOrigin: true,
+        ws: true,
+      },
+    },
+  },
 })

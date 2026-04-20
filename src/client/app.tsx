@@ -1,14 +1,17 @@
 import {add} from "../shared/utils.ts";
-import {useState} from "react";
-import type {Foo} from "../server/main.tsx";
+import {trpc} from "./trpc.ts";
 
 function App() {
+  const {data} = trpc.hello.useQuery({name: 'Foo'});
+
+  trpc.onChange.useSubscription(undefined, {
+    onData: data1 => console.log('onChange', data1),
+  })
+
   add(22, 33);
-  const [state,] = useState<Foo>({foo: 'aaa', bar: 11});
+  console.log(data);
 
-  console.log(state);
-
-  return <div>Hello World111222!</div>
+  return <div>{data?.greeting ?? 'Loading...'}</div>
 }
 
 export default App
