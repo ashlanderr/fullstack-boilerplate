@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:client": "vite",
-    "dev:server": "tsx watch src/server/main.tsx",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "client:dev": "vite",
+    "client:preview": "vite preview",
+    "server:dev": "tsx watch src/server/main.tsx",
+    "server:start": "node dist/server/server/main.js",
+    "all:build": "tsc -b && vite build",
+    "all:lint": "eslint ."
   },
   "dependencies": {
     "react": "^19.2.5",
