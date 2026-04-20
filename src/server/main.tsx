@@ -23,7 +23,6 @@ const server = app.listen(5000, () => {
     console.log("🚀 Server ready at http://localhost:5000");
 });
 
-// WebSocket сервер на том же порту
 const wss = new WebSocketServer({ server });
 applyWSSHandler({
     wss,

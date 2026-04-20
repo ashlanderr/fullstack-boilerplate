@@ -1,10 +1,12 @@
 import { initTRPC } from "@trpc/server";
 import { EventEmitter } from "events";
+import {prisma} from "./prisma.ts";
 
 const events = new EventEmitter();
 
 export const createContext = () => {
   return {
+    prisma,
     events,
   };
 };
