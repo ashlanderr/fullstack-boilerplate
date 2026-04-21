@@ -1,24 +1,21 @@
-import {add} from "../shared/utils.ts";
 import {trpc} from "./trpc.ts";
 import type {User} from "../generated/prisma/client.ts";
 import {authClient} from "./auth.ts";
+import {useState} from "react";
+import {add} from "../shared/utils.ts";
 
 function App() {
   const {isPending, data: session} = authClient.useSession();
   const isLoggedIn = !isPending && session;
+  const [sub, setSub] = useState<number>();
 
-  console.log({isPending, session});
-
-  const {data} = trpc.hello.useQuery({id: 'ashlanderr'});
+  const {data} = trpc.hello.useQuery(undefined);
 
   trpc.onChange.useSubscription(undefined, {
-    onData: data1 => console.log('onChange', data1),
+    onData: data1 => setSub(data1),
   })
 
-  const user: User | undefined = data?.user;
-
-  add(22, 33);
-  console.log({user});
+  const user: User | undefined | null = data?.user;
 
   const signIn = async () => {
     authClient.signIn.social({
@@ -26,11 +23,21 @@ function App() {
     })
   }
 
+  const signOut = async () => {
+    authClient.signOut();
+  }
+
   return <div>
     {!isLoggedIn && (
         <button onClick={signIn}>Sign In</button>
     )}
+    {isLoggedIn && (
+        <button onClick={signOut}>Sign Out</button>
+    )}
     <div>{data?.greeting ?? 'Loading...'}</div>
+    <div>Subscription: {sub}</div>
+    <div>User: {JSON.stringify(user)}</div>
+    <div>Add: {add(11, 22)}</div>
   </div>
 }
 

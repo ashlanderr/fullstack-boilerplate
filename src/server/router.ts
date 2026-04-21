@@ -1,13 +1,11 @@
-import { publicProcedure, router } from "./trpc.ts";
-import { z } from "zod";
+import {protectedProcedure, publicProcedure, router} from "./trpc.ts";
 
 export const appRouter = router({
-  hello: publicProcedure.input(z.object({id: z.string()})).query(async ({ctx, input}) => {
+  hello: protectedProcedure.query(async ({ctx}) => {
     const user = await ctx.prisma.user.findUnique({
-      where: {id: input.id}
+      where: {id: ctx.user.id}
     });
-    if (!user) throw new Error('User not found');
-    return {greeting: `Hello, ${user.name}!`, user};
+    return {greeting: `Hello, ${ctx.user.name}!`, user};
   }),
 
   onChange: publicProcedure.subscription(async function *() {
