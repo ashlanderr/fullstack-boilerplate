@@ -18,13 +18,14 @@ function App() {
   const user: User | undefined | null = data?.user;
 
   const signIn = async () => {
-    authClient.signIn.social({
+    await authClient.signIn.social({
       provider: 'google',
     })
   }
 
   const signOut = async () => {
-    authClient.signOut();
+    await authClient.signOut();
+    window.location.reload();
   }
 
   return <div>
