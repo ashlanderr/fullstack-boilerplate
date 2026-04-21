@@ -13,7 +13,7 @@
     "client:preview": "vite preview",
     "client:build": "tsc -b && vite build",
     "server:dev": "tsx watch src/server/main.tsx",
-    "server:start": "node dist/server/server/main.js",
+    "server:start": "node --import=specifier-resolution-node/register dist/server/server/main.js",
     "server:build": "tsc --noEmit false --outDir dist/server",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
@@ -36,6 +36,7 @@
     "react-dom": "^19.2.5",
     "react-router": "^7.14.1",
     "react-router-dom": "^7.14.1",
+    "specifier-resolution-node": "^1.1.4",
     "tailwindcss": "^4.2.3",
     "ws": "^8.20.0"
   },

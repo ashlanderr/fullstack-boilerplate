@@ -1,7 +1,6 @@
 import { useSession } from "../../components";
 import { useState } from "react";
 import { trpc } from "../../trpc.ts";
-import type { User } from "../../../generated/prisma/client.ts";
 import { add } from "../../../shared/utils.ts";
 import { authClient } from "../../auth.ts";
 
@@ -15,8 +14,6 @@ export function Home() {
   trpc.onChange.useSubscription(undefined, {
     onData: (data1) => setSub(data1),
   });
-
-  const user: User | undefined | null = data?.user;
 
   const signOut = async () => {
     await authClient.signOut();
@@ -34,7 +31,7 @@ export function Home() {
       <div>{data?.greeting ?? "Loading..."}</div>
       <div>Subscription: {sub}</div>
       <div>Session user: {JSON.stringify(session.user)}</div>
-      <div>User: {JSON.stringify(user)}</div>
+      <div>User: {JSON.stringify(data?.user)}</div>
       <div>Add: {add(11, 22)}</div>
     </div>
   );
