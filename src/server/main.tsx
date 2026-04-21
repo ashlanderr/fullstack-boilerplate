@@ -5,8 +5,13 @@ import {createExpressMiddleware} from "@trpc/server/adapters/express";
 import {createContext} from "./trpc.ts";
 import {applyWSSHandler} from "@trpc/server/adapters/ws";
 import { WebSocketServer } from "ws";
+import {auth} from "../auth.ts";
+import {toNodeHandler} from "better-auth/node";
 
 const app = express();
+
+app.all('/api/auth/{*any}', toNodeHandler(auth));
+
 app.use(cors());
 app.use(
     "/trpc",
@@ -15,6 +20,7 @@ app.use(
         createContext,
     }),
 );
+
 app.use("/alive", (_req, res) => {
     res.status(200).send({});
 });
