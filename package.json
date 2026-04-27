@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently 'npm run client:dev' 'npm run server:dev'",
-    "test": "vitest",
     "build": "npm run db:generate && npm run server:build && npm run client:build",
     "lint": "eslint .",
     "start": "npm run server:start",
@@ -16,8 +15,9 @@
     "server:start": "node --import=specifier-resolution-node/register dist/server/server/main.js",
     "server:build": "tsc --noEmit false --outDir dist/server",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev"
+    "db:migrate": "prisma migrate deploy",
+    "test:dev": "vitest",
+    "test:ci": "vitest run"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.7.0",
