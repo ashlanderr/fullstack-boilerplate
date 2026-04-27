@@ -11,6 +11,9 @@ wsUrl.protocol = wsUrl.protocol.replace("http", "ws");
 
 const wsClient = createWSClient({
   url: wsUrl.href,
+  retryDelayMs: (attemptIndex) => {
+    return Math.min(1000 * Math.pow(2, attemptIndex), 64_000);
+  },
 });
 
 const trpcClientOptions = {
