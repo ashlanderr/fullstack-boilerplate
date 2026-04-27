@@ -4,6 +4,7 @@ import { prisma } from "./prisma.ts";
 import { auth } from "../auth.ts";
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
+import SuperJSON from "superjson";
 
 const events = new EventEmitter();
 
@@ -21,7 +22,9 @@ export const createContext = async ({
 };
 
 type Context = Awaited<ReturnType<typeof createContext>>;
-const t = initTRPC.context<Context>().create();
+const t = initTRPC.context<Context>().create({
+  transformer: SuperJSON,
+});
 
 export const router = t.router;
 export const publicProcedure = t.procedure;

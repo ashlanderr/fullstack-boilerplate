@@ -2,6 +2,7 @@ import { createWSClient, httpBatchLink, splitLink, wsLink } from "@trpc/client";
 import type { AppRouter } from "../server/router";
 import { createTRPCReact } from "@trpc/react-query";
 import { QueryClient } from "@tanstack/react-query";
+import SuperJSON from "superjson";
 
 export const queryClient = new QueryClient();
 
@@ -16,9 +17,13 @@ const trpcClientOptions = {
   links: [
     splitLink({
       condition: (op) => op.type === "subscription",
-      true: wsLink({ client: wsClient }),
+      true: wsLink({
+        client: wsClient,
+        transformer: SuperJSON,
+      }),
       false: httpBatchLink({
         url: "/trpc",
+        transformer: SuperJSON,
       }),
     }),
   ],
