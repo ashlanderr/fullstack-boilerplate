@@ -7,6 +7,7 @@ import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
 } from "./server/env.ts";
+import { anonymous } from "better-auth/plugins";
 
 export const auth = betterAuth({
   secret: BETTER_AUTH_SECRET,
@@ -27,4 +28,5 @@ export const auth = betterAuth({
       console.log("Sign In", user);
     }),
   },
+  plugins: [anonymous()],
 });
